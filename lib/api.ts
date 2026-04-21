@@ -50,3 +50,16 @@ Authorization: `Bearer ${key}`,
     });
    return response.data;
      }
+
+     export async function fetchNotesByTag( page?: number, tag?:string,): Promise<Notes>{
+  const result = await axios.get(`${url}/notes`, {
+    params: {
+      page: page,
+      tag: tag,
+},
+headers: {
+Authorization: `Bearer ${key}`,
+  },
+});
+   return result.data;
+}
