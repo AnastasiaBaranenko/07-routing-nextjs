@@ -1,21 +1,32 @@
 import {fetchNotesByTag} from '@/lib/api';
+import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 import NotesClient from './Notes.client';
-import type { Note } from '@/types/note';
+import { fetchNotes } from '@/lib/api';
 
 type NotesPageProps = {
-  params: Promise<{ slug: string[] }>;
+  params: Promise<{ slug?: string[] }>;
 };
 
 export default async function NotesPages({ params }: NotesPageProps){
 const {slug} = await params;
+const queryClient = new QueryClient();
   const category = slug?.[0] || 'all';
   const formattedTag = category === 'all' ? 'all' : category.charAt(0).toUpperCase() + category.slice(1).toLowerCase();
-  const data = await fetchNotesByTag(1, formattedTag === 'all' ? undefined : formattedTag);
-  const notesData: Note[] = Array.isArray(data) ? data : (data?.notes || []);
+ 
+  await queryClient.prefetchQuery({
+    queryKey: ['memos', '', 1, formattedTag],
+      queryFn: () => formattedTag === 'all' ?
+       fetchNotes('', 1)
+       : fetchNotesByTag(1, formattedTag),
+  });
   
     return(
       <section>
-        <NotesClient initialNotes={notesData} category={formattedTag}></NotesClient>
+        <HydrationBoundary state={dehydrate(queryClient)}>
+        <NotesClient 
+         category={formattedTag}>
+         </NotesClient>
+         </HydrationBoundary>
         </section>
     )
       

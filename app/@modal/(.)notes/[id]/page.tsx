@@ -17,7 +17,7 @@ const handleClose = () => router.back();
 return(
     <Modal isOpen={true} onClose={handleClose}>
     <button className={css.closeBtn} onClick={handleClose}>Close</button>
-    <NoteDetailsClient id={id} stylesPreview={css}/>
+    <NoteDetailsClient id={id}/>
     </Modal>
 )
 }
