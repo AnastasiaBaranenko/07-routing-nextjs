@@ -1,17 +1,22 @@
 'use client'
 
-import { useQuery, keepPreviousData } from '@tanstack/react-query';
+import {useRouter } from 'next/navigation';
+import Modal from '@/components/Modal/Modal';
+import { useQuery } from '@tanstack/react-query';
 import { fetchNoteById } from '@/lib/api';
 import css from './NotePreview.module.css';
 
 export default function NotePreviewClient({ id }: { id: string }){
-const {data: note, isLoading, error} = useQuery({
-    queryKey: ['memos',id],
+const router = useRouter();
+
+  const {data: note, isLoading, error} = useQuery({
+    queryKey: ['notes',id],
     queryFn: () => fetchNoteById(id, ),
     enabled: true,
-    placeholderData: keepPreviousData,
     refetchOnMount: false,
   })
+
+  const handleClose = () => {router.back();};
 
   if(isLoading){
     return <p>Loading, please wait...</p>;
@@ -23,6 +28,7 @@ const {data: note, isLoading, error} = useQuery({
 
     return(
     <div className={css.container}>
+      <Modal isOpen={true} onClose={handleClose}>
 	<div className={css.item}>
 	  <div className={css.header}>
 	    <h2>{note.title}</h2>
@@ -31,6 +37,7 @@ const {data: note, isLoading, error} = useQuery({
 	  <p className={css.content}>{note.content}</p>
 	  <p className={css.date}>{note.createdAt}</p>
 	</div>
+  </Modal>
 </div>
     )
 }

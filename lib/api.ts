@@ -10,12 +10,13 @@ totalPages: number;
 const key = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
 const url = 'https://notehub-public.goit.study/api'
 
-export async function fetchNotes(search: string, page: number): Promise<Notes>{
+export async function fetchNotes(search: string, page: number, tag: string): Promise<Notes>{
 
 const response = await axios.get<Notes>(`${url}/notes`, {
     params: {
         search: search,
         page: page,
+        tag:tag,
 },
 headers: {
 Authorization: `Bearer ${key}`,
@@ -50,15 +51,3 @@ Authorization: `Bearer ${key}`,
    return response.data;
      }
 
-     export async function fetchNotesByTag( page?: number, tag?:string,): Promise<Notes>{
-  const result = await axios.get(`${url}/notes`, {
-    params: {
-      page: page,
-      tag: tag,
-},
-headers: {
-Authorization: `Bearer ${key}`,
-  },
-});
-   return result.data;
-}

@@ -1,6 +1,5 @@
 'use client'
 
-import type {Note} from '@/types/note';
 import{useQuery, keepPreviousData } from '@tanstack/react-query';
 import {useEffect, useState} from 'react';
 import Modal from '@/components/Modal/Modal';
@@ -12,15 +11,12 @@ import SearchBox from '@/components/SearchBox/SearchBox';
 import Pagination from '@/components/Pagination/Pagination';
 import css from './NotesPage.module.css'
 import toast, { Toaster } from 'react-hot-toast';
-import {fetchNotesByTag} from '@/lib/api';
 
 export interface NotesClientProps{
-    category: string;
-   
+    tag: string;
 }
 
-export default function NotesClient({category}: NotesClientProps){
-
+export default function NotesClient({tag}: NotesClientProps){
  const [search, setSearch] = useState('');
  const [page, setPage] = useState(1);
  const [isModalOpen, setIsModalOpen] = useState(false);
@@ -35,9 +31,8 @@ const handleSearch = (newValue:string) => {
 };
 
 const { data, isSuccess } = useQuery({
-    queryKey: ['memos',search, page, category],
-    queryFn: () => category === 'all' ?
-    fetchNotes(search, page) : fetchNotesByTag(page, category === 'all' ? undefined : category),
+    queryKey: ['notes',search, page, tag],
+    queryFn: () => fetchNotes(search, page, tag),
     enabled: true,
     placeholderData: keepPreviousData,
   });
