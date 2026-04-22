@@ -1,12 +1,11 @@
-  import type { NoteValues } from '../components/NoteForm/NoteForm';
-  import type {Note} from '../types/note';
+import type { NoteValues } from '../components/NoteForm/NoteForm';
+import type {Note} from '../types/note';
 import axios from "axios";
 
 export interface Notes{
 notes: Note[];
 totalPages: number;
 }
-
 
 const key = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
 const url = 'https://notehub-public.goit.study/api'

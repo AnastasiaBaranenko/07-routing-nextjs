@@ -1,14 +1,16 @@
 'use client'
 
-import css from './NoteDetails.module.css';
+import defaultCss from './NoteDetails.module.css';
 import {fetchNoteById} from '@/lib/api';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
 
 export interface NoteDetailsClientProps{
 id: string;
+stylesPreview?: Record<string, string>; 
 }
 
-export function NoteDetailsClient({id}: NoteDetailsClientProps){
+export function NoteDetailsClient({id, stylesPreview }: NoteDetailsClientProps){
+const s = stylesPreview || defaultCss;
 
 const {data: note, isLoading, error} = useQuery({
     queryKey: ['memos',id],
@@ -27,14 +29,14 @@ const {data: note, isLoading, error} = useQuery({
   }
 
     return(
-    <div className={css.container}>
-	<div className={css.item}>
-	  <div className={css.header}>
+    <div className={s.container}>
+	<div className={s.item}>
+	  <div className={s.header}>
 	    <h2>{note.title}</h2>
 	  </div>
-      <p className={css.tag}>{note.tag}</p>
-	  <p className={css.content}>{note.content}</p>
-	  <p className={css.date}>{note.createdAt}</p>
+      <p className={s.tag}>{note.tag}</p>
+	  <p className={s.content}>{note.content}</p>
+	  <p className={s.date}>{note.createdAt}</p>
 	</div>
 </div>
     )
