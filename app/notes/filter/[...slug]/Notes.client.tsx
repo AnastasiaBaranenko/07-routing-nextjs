@@ -30,11 +30,12 @@ const handleSearch = (newValue:string) => {
     debouncedSearch(newValue);
 };
 
+const apiSearch = (search || undefined) as string;
+const apiTag = (tag === 'all' ? undefined : tag) as string;
+
 const { data, isSuccess } = useQuery({
     queryKey: ['notes',search, page, tag],
-    queryFn: () => {
-      const apiTag = tag === 'all' ? '' : tag;
-     return fetchNotes(search, page, apiTag)},
+    queryFn: () => fetchNotes(apiSearch, page, apiTag),
     enabled: true,
     placeholderData: keepPreviousData,
   });

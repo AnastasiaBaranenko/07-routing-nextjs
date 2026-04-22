@@ -14,9 +14,9 @@ export async function fetchNotes(search: string, page: number, tag: string): Pro
 
 const response = await axios.get<Notes>(`${url}/notes`, {
     params: {
-        search: search || undefined,
+        search: search,
         page: page,
-        tag:tag || undefined,
+        tag:tag,
 },
 headers: {
 Authorization: `Bearer ${key}`,
