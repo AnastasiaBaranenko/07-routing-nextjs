@@ -3,7 +3,7 @@ import NotesClient from './Notes.client';
 import { fetchNotes } from '@/lib/api';
 
 type NotesPageProps = {
-  params: Promise<{ slug?: string[] }>;
+  params: Promise<{ slug: string[] }>;
 };
 
 export default async function NotesPages({ params }: NotesPageProps){
@@ -13,7 +13,7 @@ const queryClient = new QueryClient();
   const formattedTag = tag === 'all' ? 'all' : tag.charAt(0).toUpperCase() +tag.slice(1).toLowerCase();
  
   await queryClient.prefetchQuery({
-    queryKey: ['notes', '', 1, formattedTag],
+    queryKey: ['notes', 1, formattedTag],
       queryFn: () => fetchNotes('', 1, formattedTag)     
   });
   

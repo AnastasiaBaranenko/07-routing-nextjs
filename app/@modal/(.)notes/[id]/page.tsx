@@ -10,7 +10,7 @@ export default async function NotePreview({params}: NotePreviewProps) {
   const queryClient = new QueryClient();
   const {id} = await params;
 await queryClient.prefetchQuery({
-  queryKey: ['notes', id],
+  queryKey: ['note', id],
     queryFn: () => fetchNoteById(id),
 });
 
