@@ -32,7 +32,9 @@ const handleSearch = (newValue:string) => {
 
 const { data, isSuccess } = useQuery({
     queryKey: ['notes',search, page, tag],
-    queryFn: () => fetchNotes(search, page, tag),
+    queryFn: () => {
+      const apiTag = tag === 'all' ? '' : tag;
+     return fetchNotes(search, page, apiTag)},
     enabled: true,
     placeholderData: keepPreviousData,
   });

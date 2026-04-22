@@ -10,11 +10,11 @@ export default async function NotesPages({ params }: NotesPageProps){
 const {slug} = await params;
 const queryClient = new QueryClient();
   const tag = slug?.[0] || 'all';
-  const formattedTag = tag === 'all' ? 'all' : tag.charAt(0).toUpperCase() +tag.slice(1).toLowerCase();
- 
+  const formattedTag = tag === 'all' ? 'all' : tag.charAt(0).toUpperCase() + tag.slice(1).toLowerCase();
+ const apiTag = formattedTag === 'all' ? '' : formattedTag;
   await queryClient.prefetchQuery({
-    queryKey: ['notes', 1, formattedTag],
-      queryFn: () => fetchNotes('', 1, formattedTag)     
+    queryKey: ['notes','', 1, formattedTag],
+      queryFn: () => fetchNotes('', 1, apiTag)     
   });
   
     return(
