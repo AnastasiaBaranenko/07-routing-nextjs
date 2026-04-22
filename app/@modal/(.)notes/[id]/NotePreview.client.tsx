@@ -1,15 +1,10 @@
 'use client'
 
-import css from './NoteDetails.module.css';
-import {fetchNoteById} from '@/lib/api';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
+import { fetchNoteById } from '@/lib/api';
+import css from './NotePreview.module.css';
 
-export interface NoteDetailsClientProps{
-id: string; 
-}
-
-export function NoteDetailsClient({id}: NoteDetailsClientProps){
-
+export default function NotePreviewClient({ id }: { id: string }){
 const {data: note, isLoading, error} = useQuery({
     queryKey: ['memos',id],
     queryFn: () => fetchNoteById(id, ),
