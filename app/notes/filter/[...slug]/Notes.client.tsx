@@ -21,7 +21,6 @@ export default function NotesClient({tag}: NotesClientProps){
  const [page, setPage] = useState(1);
  const [isModalOpen, setIsModalOpen] = useState(false);
 
-
  const debouncedSearch = useDebouncedCallback(
     (value) => {
       setSearch(value);
@@ -32,10 +31,9 @@ const handleSearch = (newValue:string) => {
     debouncedSearch(newValue);
 };
 
-
 const { data, isSuccess } = useQuery({
     queryKey: ['notes',search, page, tag],
-    queryFn: () => fetchNotes(search, page, tag as string),
+    queryFn: () => fetchNotes(search, page, tag ),
     enabled: true,
     placeholderData: keepPreviousData,
   });

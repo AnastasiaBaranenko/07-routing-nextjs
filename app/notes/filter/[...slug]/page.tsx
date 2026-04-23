@@ -9,22 +9,21 @@ type NotesPageProps = {
 export default async function NotesPages({ params }: NotesPageProps){
 const {slug} = await params;
 const queryClient = new QueryClient();
-const rawTag = slug?.[0];
-const tag = rawTag && rawTag.toLowerCase() !== 'all' ? rawTag : undefined;
 
+const tag = (slug?.[0] && slug[0].toLowerCase() !== 'all') ? slug[0] : undefined;
 
 const search="";
 const page=1;  
 await queryClient.prefetchQuery({
     queryKey: ['notes', search, page, tag],
-      queryFn: () => fetchNotes(search, page, tag as string),     
+      queryFn: () => fetchNotes(search, page, tag ?? ''),     
   });
   
     return(
       <section>
         <HydrationBoundary state={dehydrate(queryClient)}>
         <NotesClient 
-         tag={tag as string} key={tag || 'all'}>
+         tag={tag} key={tag ?? ""}>
          </NotesClient>
          </HydrationBoundary>
         </section>
