@@ -11,8 +11,8 @@ id: string;
 export function NoteDetailsClient({id}: NoteDetailsClientProps){
 
 const {data: note, isLoading, error} = useQuery({
-    queryKey: ['memos',id],
-    queryFn: () => fetchNoteById(id, ),
+    queryKey: ['notes',id],
+    queryFn: () => fetchNoteById(id),
     enabled: true,
     placeholderData: keepPreviousData,
     refetchOnMount: false,
