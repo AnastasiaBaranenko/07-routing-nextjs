@@ -16,14 +16,14 @@ const search="";
 const page=1;  
 await queryClient.prefetchQuery({
     queryKey: ['notes', search, page, tag],
-      queryFn: () => fetchNotes(search, page, tag ?? ''),     
+      queryFn: () => fetchNotes(search, page, tag),     
   });
   
     return(
       <section>
         <HydrationBoundary state={dehydrate(queryClient)}>
         <NotesClient 
-         tag={tag} key={tag ?? ""}>
+         tag={tag}>
          </NotesClient>
          </HydrationBoundary>
         </section>

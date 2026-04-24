@@ -13,7 +13,7 @@ import css from './NotesPage.module.css'
 import toast, { Toaster } from 'react-hot-toast';
 
 export interface NotesClientProps{
-    tag: string;
+    tag?: string;
 }
 
 export default function NotesClient({tag}: NotesClientProps){
